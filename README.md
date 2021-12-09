@@ -9,7 +9,7 @@ CAMO package in be installed from Github by running the following code in R cons
 library(devtools)
 install_github("https://github.com/CAMO-R/Rpackage") 
 ```
-Alternatively, the complied source package CAMO_1.0.tar.gz can be downloaded at https://https://github.com/CAMO-R/other/tree/main/Package_dependences and install locally by
+Alternatively, the complied source package CAMO_1.0.tar.gz can be downloaded at https://github.com/CAMO-R/other/tree/main/Package_dependences and installed locally by
 
 ```{R}
 install.packages("~/CAMO_1.0.tar.gz", repos = NULL, type = "source")
