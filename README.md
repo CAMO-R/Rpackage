@@ -14,5 +14,5 @@ install_github("https://github.com/CAMO-R/Rpackage")
 ## Full tutorial (to be updated)
 
 
-http://htmlpreview.github.io/?https://github.com/weiiizong/CAMO/blob/main/vignettes/CAMO.html
+http://htmlpreview.github.io/?https://github.com/CAMO-R/CAMO/blob/main/vignettes/CAMO.html
 
