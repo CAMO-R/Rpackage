@@ -3,13 +3,13 @@ Github repository for a molecular congruence analysis framework for evaluating m
 
 
 ## Install this package
-CAMO package in be installed from Github by running the following code in R console
+CAMO package in be installed from Github by running the following code in R console.
 
 ```{R}
 library(devtools)
 install_github("https://github.com/CAMO-R/Rpackage") 
 ```
-Alternatively, the complied source package CAMO_1.0.tar.gz can be downloaded at https://github.com/CAMO-R/other/tree/main/Package_dependences and installed locally by
+Alternatively, the complied source package CAMO_1.0.tar.gz can be downloaded at https://github.com/CAMO-R/other/tree/main/Package_dependences and installed locally by running the following code in R console.
 
 ```{R}
 install.packages("~/CAMO_1.0.tar.gz", repos = NULL, type = "source")
