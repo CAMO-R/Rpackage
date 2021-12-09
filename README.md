@@ -14,6 +14,7 @@ Alternatively, the complied source package CAMO_1.0.tar.gz can be downloaded at 
 ```{R}
 install.packages("~/CAMO_1.0.tar.gz", repos = NULL, type = "source")
 ```
+Some of the dependences that are not on CRAN can be found at https://github.com/CAMO-R/other/tree/main/Package_dependences.
 
 ## Full tutorial (to be updated)
 
