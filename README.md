@@ -7,7 +7,7 @@ Github repository for a molecular congruence analysis framework for evaluating m
 
 ```{R}
 library(devtools)
-install_github("https://github.com/weiiizong/CAMO") 
+install_github("https://github.com/CAMO-R/Rpackage") 
 ```
 
 
