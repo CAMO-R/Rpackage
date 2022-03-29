@@ -24,7 +24,7 @@ CRAN.packages <- function(pkg){
     if (length(new.pkg)) 
         install.packages(new.pkg, dependencies = TRUE)
 }
-CRAN.packages(c("RcppArmadillo", "Rcpp", "MASS", "parallel", "devtools", "methods", "igraph", "gridExtra", "grid", "ggplot2", "gplots", "reticulate"))
+CRAN.packages(c("ROCR", "quantmod", "xts","RcppArmadillo", "Rcpp", "MASS", "parallel", "devtools", "methods", "igraph", "gridExtra", "grid", "ggplot2", "gplots", "reticulate"))
 
 ## from Bioconductor
 Bioconductor.packages <- function(pkg){
@@ -36,6 +36,9 @@ Bioconductor.packages(c("DESeq2", "limma", "ConsensusClusterPlus", "pathview", "
 ```
 
 Some of the dependences that are not on CRAN and Bioconductor can be downloaded at https://github.com/CAMO-R/other/tree/main/Package_dependences.
+
+MacOS users may encounter issues realted to C++ compiler in Big Sur. This tutorial might be helpful: http://yiqingxu.org/public/BigSurError.pdf
+
 
 ## Full tutorial (to be updated)
 
