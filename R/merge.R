@@ -1,11 +1,12 @@
 ##' The \code{merge} is function to merge multiple MCMCout matrices by
-##' matching orthologs.
+##' matching genes/orthologs.
 ##' @title Merge multiple MCMCout matrices by orthologs
 ##' @param mcmc.list: a list of MCMC output matrices.
 ##' @param species: a vector specie names of same length as mcmc.list indicating
 ##' the species of each study.
 ##' @param ortholog.db: a data.frame/matrix match orthologs between species.
-##' Column names should be consistent with the species input.
+##' Column names should be consistent with the species input. If not provided,
+##' datasets will be merges without orthologs matching.
 ##' @param reference: the index of the reference MCMC matrix. Merged
 ##' list will be named using the rownames of this matrix.
 ##' @param uniqG: TRUE: only keep the gene with greatest posterior DE signal
@@ -88,50 +89,69 @@
 ##' ortholog.db = hm_orth, reference=1,uniqG=T)
 ##' }
 
-merge <- function(mcmc.list,species,ortholog.db,
+merge <- function(mcmc.list,species,ortholog.db = NULL,
                   reference=1,uniqG=T){
-  if(!all(species %in% colnames(ortholog.db))){
-    stop('Found species without corresponding orthologs in the ortholog.db provides.')
-  }
+  if(is.null(ortholog.db) | length(unique(species)) == 1){
+    print("Only one species, merge datasets without ortholog match")
+    M <- length(mcmc.list)
+    mcmc.merge.list <- vector("list",M)
 
-  if(length(species) != length(mcmc.list)){
-    stop('The number of species does not match with the number of mcmc matrices.')
-  }
-  M <- length(mcmc.list)
-  mcmc.merge.list <- DEgene.merge.list <- vector("list",M)
+    gene.list <- lapply(mcmc.list,rownames)
+    DEgene.list <- lapply(mcmc.list,function(x) rownames(x)[attr(x,"DEindex")])
 
-  gene.list <- lapply(mcmc.list,rownames)
-  DEgene.list <- lapply(mcmc.list,function(x) rownames(x)[attr(x,"DEindex")])
+    int_genes <- Reduce(intersect, gene.list)
 
-  match_gene <- orthMatch(gene.list,species,ortholog.db)
-  ref_gene <- match_gene[[reference]]
-  ## match_gene and ref_gene of same dimension
-  for(m in 1:M){
-    mcmc.merge.list[[m]] <- mcmc.list[[m]][match_gene[[m]],]
-    rownames(mcmc.merge.list[[m]]) <- ref_gene
-    DEgenes <- ref_gene[which(match_gene[[m]] %in% DEgene.list[[m]])]
-    DEindex <- which(rownames(mcmc.merge.list[[m]])%in% DEgenes)
-    attr(mcmc.merge.list[[m]],"DEindex") <- DEindex
-  }
-  if(uniqG==T){
-    mcmc.merge.list.uniq = lapply(mcmc.merge.list, function(mat){
-      geneSplit = split(1:nrow(mat),row.names(mat))
-      uniq.index = sapply(geneSplit,function(g){
-        if(length(g)==1){
-          return(g)
-        }else{
-          DEmean = abs(apply(mat[g,],1,mean))
-          selected.row = which.max(DEmean)
-          return(g[selected.row])
-        }
-      })
-      uniq.mat = mat[uniq.index,]
-      attr(uniq.mat,"DEindex") = which(!is.na(match(uniq.index,attr(mat,"DEindex"))))
-      return(uniq.mat)
-    })
-    return(mcmc.merge.list.uniq)
-  }else{
+    for(m in 1:M){
+      mcmc.merge.list[[m]] <- mcmc.list[[m]][int_genes,]
+      DEgenes <- int_genes[which(int_genes %in% DEgene.list[[m]])]
+      DEindex <- which(rownames(mcmc.merge.list[[m]])%in% DEgenes)
+      attr(mcmc.merge.list[[m]],"DEindex") <- DEindex
+    }
     return(mcmc.merge.list)
+  }else{
+    if(!all(species %in% colnames(ortholog.db))){
+      stop('Found species without corresponding orthologs in the ortholog.db provides.')
+    }
+
+    if(length(species) != length(mcmc.list)){
+      stop('The number of species does not match with the number of mcmc matrices.')
+    }
+    M <- length(mcmc.list)
+    mcmc.merge.list <- DEgene.merge.list <- vector("list",M)
+
+    gene.list <- lapply(mcmc.list,rownames)
+    DEgene.list <- lapply(mcmc.list,function(x) rownames(x)[attr(x,"DEindex")])
+
+    match_gene <- orthMatch(gene.list,species,ortholog.db)
+    ref_gene <- match_gene[[reference]]
+    ## match_gene and ref_gene of same dimension
+    for(m in 1:M){
+      mcmc.merge.list[[m]] <- mcmc.list[[m]][match_gene[[m]],]
+      rownames(mcmc.merge.list[[m]]) <- ref_gene
+      DEgenes <- ref_gene[which(match_gene[[m]] %in% DEgene.list[[m]])]
+      DEindex <- which(rownames(mcmc.merge.list[[m]])%in% DEgenes)
+      attr(mcmc.merge.list[[m]],"DEindex") <- DEindex
+    }
+    if(uniqG==T){
+      mcmc.merge.list.uniq = lapply(mcmc.merge.list, function(mat){
+        geneSplit = split(1:nrow(mat),row.names(mat))
+        uniq.index = sapply(geneSplit,function(g){
+          if(length(g)==1){
+            return(g)
+          }else{
+            DEmean = abs(apply(mat[g,],1,mean))
+            selected.row = which.max(DEmean)
+            return(g[selected.row])
+          }
+        })
+        uniq.mat = mat[uniq.index,]
+        attr(uniq.mat,"DEindex") = which(!is.na(match(uniq.index,attr(mat,"DEindex"))))
+        return(uniq.mat)
+      })
+      return(mcmc.merge.list.uniq)
+    }else{
+      return(mcmc.merge.list)
+    }
   }
 }
 
