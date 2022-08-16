@@ -24,7 +24,7 @@ CRAN.packages <- function(pkg){
     if (length(new.pkg)) 
         install.packages(new.pkg, dependencies = TRUE)
 }
-CRAN.packages(c("ROCR", "quantmod", "xts","RcppArmadillo", "Rcpp", "MASS", "parallel", "devtools", "methods", "igraph", "gridExtra", "grid", "ggplot2", "gplots", "reticulate", "DT"))
+CRAN.packages(c("ROCR", "quantmod", "xts","RcppArmadillo", "Rcpp", "MASS", "parallel", "devtools", "methods", "igraph", "gridExtra", "grid", "ggplot2", "gplots", "reticulate"))
 
 ## from Bioconductor
 Bioconductor.packages <- function(pkg){
