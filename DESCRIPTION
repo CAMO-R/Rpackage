@@ -11,7 +11,7 @@ biocViews:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Imports: 
     parallel,
     devtools,
@@ -20,7 +20,7 @@ Imports:
     methods,
     igraph,
     org.Hs.eg.db,
-    org.Mm.eg.db, 
+    org.Mm.eg.db,
     org.Rn.eg.db,
     org.Dm.eg.db,
     reactome.db,
@@ -28,7 +28,9 @@ Imports:
     grid,
     ggplot2,
     gplots,
-    reticulate
+    reticulate,
+    Rcpp,
+    RcppArmadillo
 LinkingTo: 
     Rcpp,
     RcppArmadillo

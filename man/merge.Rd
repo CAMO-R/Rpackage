@@ -4,7 +4,7 @@
 \alias{merge}
 \title{Merge multiple MCMCout matrices by orthologs}
 \usage{
-merge(mcmc.list, species, ortholog.db, reference = 1, uniqG = T)
+merge(mcmc.list, species, ortholog.db = NULL, reference = 1, uniqG = T)
 }
 \arguments{
 \item{mcmc.list:}{a list of MCMC output matrices.}
@@ -13,7 +13,8 @@ merge(mcmc.list, species, ortholog.db, reference = 1, uniqG = T)
 the species of each study.}
 
 \item{ortholog.db:}{a data.frame/matrix match orthologs between species.
-Column names should be consistent with the species input.}
+Column names should be consistent with the species input. If not provided,
+datasets will be merges without orthologs matching.}
 
 \item{reference:}{the index of the reference MCMC matrix. Merged
 list will be named using the rownames of this matrix.}
@@ -28,7 +29,7 @@ rows and rownames)
 }
 \description{
 The \code{merge} is function to merge multiple MCMCout matrices by
-matching orthologs.
+matching genes/orthologs.
 }
 \examples{
 \dontrun{
