@@ -57,27 +57,31 @@ We first run differential anlysis (LIMMA for microarray data) followed by the Ba
 ```{r, eval=FALSE}
 library(CAMO)
 
-data(hb)#load human burn data
-summaryDE = indDE(data=data,group=as.factor(group),data.type="microarray",
-                   case.label="2", ctrl.label="1")#differential anlysis
+data("hb")#load human burn data
+data("hb.group")
+summaryDE = indDE(data=hb,group=as.factor(hb.group),data.type="microarray",
+                  case.label="2", ctrl.label="1")#differential anlysis
 hb_pData = summaryDE[,c(3,1)]
 hb_MCMCout = bayes(hb_pData, seed=12345)#Bayesian differential analysis
 
-data(hs)#load human sepsis data
-summaryDE = indDE(data=data,group=as.factor(group),data.type="microarray",
-                   case.label="2", ctrl.label="1")#differential anlysis
+data("hs")#load human sepsis data
+data("hs.group")
+summaryDE = indDE(data=hs,group=as.factor(hs.group),data.type="microarray",
+                  case.label="2", ctrl.label="1")#differential anlysis
 hs_pData = summaryDE[,c(3,1)]
 hs_MCMCout = bayes(hs_pData, seed=12345)#Bayesian differential analysis
 
-data(mb)#load mouse burn data
-summaryDE = indDE(data=data,group=as.factor(group),data.type="microarray",
-                   case.label="2", ctrl.label="1")#differential anlysis
+data("mb")#load mouse burn data
+data("mb.group")
+summaryDE = indDE(data=mb,group=as.factor(mb.group),data.type="microarray",
+                  case.label="2", ctrl.label="1")#differential anlysis
 mb_pData = summaryDE[,c(3,1)]
 mb_MCMCout = bayes(mb_pData, seed=12345)#Bayesian differential analysis
 
-data(ms)#load mouse sepsis data
-summaryDE = indDE(data=data,group=as.factor(group),data.type="microarray",
-                   case.label="2", ctrl.label="1")#differential anlysis
+data("ms")#load mouse sepsis data
+data("ms.group")
+summaryDE = indDE(data=ms,group=as.factor(ms.group),data.type="microarray",
+                  case.label="2", ctrl.label="1")#differential anlysis
 ms_pData = summaryDE[,c(3,1)]
 ms_MCMCout = bayes(ms_pData, seed=12345)#Bayesian differential analysis
 
